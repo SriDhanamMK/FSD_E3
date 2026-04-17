@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body { font-family: Arial; background:#111; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; }
+    .box { background:#222; padding:30px; border-radius:10px; width:300px; }
+    input, button { width:100%; padding:10px; margin-top:10px; }
+    button { background:gold; border:none; cursor:pointer; }
+    .error { color:red; margin-top:10px; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Vel Tech University</h2>
+  <p>Intra Event Registration</p>
+
+  <input type="text" id="vtu" placeholder="VTU Number">
+  <input type="password" id="pass" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+  <div class="error" id="error"></div>
+</div>
+
+<script>
+function login() {
+  let vtu = document.getElementById("vtu").value.trim();
+  let pass = document.getElementById("pass").value.trim();
+
+  if (!vtu || !pass) {
+    document.getElementById("error").innerText = "Please fill all fields!";
+    return;
+  }
+
+  if (vtu === pass) {
+    // store login state (VERY IMPORTANT for navigation)
+    localStorage.setItem("userLoggedIn", "true");
+
+    window.location.href = "index.html";
+  } else {
+    document.getElementById("error").innerText = "Invalid credentials!";
+  }
+}
+</script>
+
+</body>
+</html>

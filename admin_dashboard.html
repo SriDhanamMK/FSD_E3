@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+</head>
+<body style="background:#111; color:white; padding:40px;">
+
+<h2>Add Event</h2>
+
+<input id="name" placeholder="Event Name"><br><br>
+<input id="dept" placeholder="Department"><br><br>
+<input id="date" type="date"><br><br>
+<input id="time" type="time"><br><br>
+<input id="venue" placeholder="Venue"><br><br>
+<input id="price" placeholder="Ticket Price"><br><br>
+<input id="tickets" placeholder="Total Tickets"><br><br>
+<textarea id="desc" placeholder="Description"></textarea><br><br>
+
+<button onclick="addEvent()">Add Event</button>
+
+<p id="msg"></p>
+
+<script>
+const API = "http://localhost/FullStack.ModelLab";
+
+function addEvent(){
+  fetch(API + "/add_event.php", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      event_name: name.value,
+      department: dept.value,
+      event_date: date.value,
+      event_time: time.value,
+      venue: venue.value,
+      ticket_price: price.value,
+      total_tickets: tickets.value,
+      description: desc.value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("msg").innerText = data.message;
+  });
+}
+</script>
+
+</body>
+</html>
