@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - EventPass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:        #0a0a0f;
+      --surface:   #13131a;
+      --card:      #1a1a24;
+      --border:    #2a2a38;
+      --accent:    #f0c040;
+      --accent2:   #e07b30;
+      --text:      #f0ede6;
+      --muted:     #888;
+      --success:   #4ade80;
+      --error:     #f87171;
+      --radius:    14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: radial-gradient(ellipse 80% 60% at 50% 0%, #1a1a3a 0%, transparent 70%);
+    }
+    .login-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.4s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 0 0 8px;
+    }
+    .login-header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .form-group { margin-bottom: 24px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s ease;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(240, 192, 64, 0.15);
+    }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0a0a0f;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+    }
+    .login-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    .login-btn:active {
+      transform: translateY(0);
+    }
+    #msg {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      min-height: 20px;
+      font-weight: 500;
+    }
+    .error-text {
+      color: var(--error);
+      background: rgba(248, 113, 113, 0.1);
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+    .success-text {
+      color: var(--success);
+      background: rgba(74, 222, 128, 0.1);
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <div class="login-header">
+    <h2>EventPass</h2>
+    <p>Admin Portal Login</p>
+  </div>
+
+  <div class="form-group">
+    <label for="user">Username</label>
+    <input type="text" id="user" placeholder="Enter admin username" autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <label for="pass">Password</label>
+    <input type="password" id="pass" placeholder="Enter your password">
+  </div>
+
+  <button class="login-btn" onclick="login()">Sign In</button>
+
+  <div id="msg"></div>
+</div>
+
+<script>
+function login() {
+  const u = document.getElementById("user").value;
+  const p = document.getElementById("pass").value;
+  const msgEl = document.getElementById("msg");
+
+  if (u === "ADMIN" && p === "QWERTYUIOP") {
+    msgEl.className = "success-text";
+    msgEl.innerText = "✓ Authentication successful. Redirecting...";
+    localStorage.setItem("isAdmin", "true");
+    setTimeout(() => {
+      window.location.href = "admin_dashboard.html";
+    }, 800);
+  } else {
+    msgEl.className = "error-text";
+    msgEl.innerText = "⚠ Invalid credentials. Access Denied.";
+  }
+}
+
+document.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    login();
+  }
+});
+</script>
+
+</body>
+</html>
